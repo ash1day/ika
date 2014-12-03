@@ -21,10 +21,10 @@ name = String(k) + dd;
 
 function csv2Array(filePath) { //csvﾌｧｲﾙﾉ相対ﾊﾟｽor絶対ﾊﾟｽ
     var csvData = new Array();
-    var data = new XMLHttpRequest();    
+    var data = new XMLHttpRequest();
     data.open("GET", filePath, false); //true:非同期,false:同期
     data.send(null);
- 
+
     var LF = String.fromCharCode(10); //改行ｺｰﾄﾞ
     var lines = data.responseText.split(LF);
     for (var i = 0; i < lines.length;++i) {
@@ -38,7 +38,7 @@ function csv2Array(filePath) { //csvﾌｧｲﾙﾉ相対ﾊﾟｽor絶対ﾊﾟ
 
 //var alldata = csv2Array("data/0929_CPUE+point(XYZ).csv");
 //var csvname = "data/total_2006_2_cpue_winter.csv";
-var csvname = "data/0929_CPUE+point(XYZ).csv";
+var csvname = "data/total_2006_2_cpue_winter.csv";
 var alldata = csv2Array(csvname);
 //console.log(alldata)
 
@@ -143,7 +143,7 @@ for (i = 0; i < alldata[row_label].length; i++) {
     for (i_ax = 0; i_ax < axis.length; i_ax++) {
         if (alldata[row_label][i][0] == axis[i_ax]) {
 
-            for (i_d = 0; i_d < depth_csv; i_d++) {//depth for 
+            for (i_d = 0; i_d < depth_csv; i_d++) {//depth for
                 if (i_d < 10) {//
                    name_depth = "0" + String(i_d);
                     }
@@ -152,7 +152,7 @@ for (i = 0; i < alldata[row_label].length; i++) {
                     }
 
                 if (alldata[row_label][i].slice(3,5) == name_depth) {//depth determin
-                    for (i_d2 = 0; i_d2 < day_csv_pathline; i_d2++) {//depth for 
+                    for (i_d2 = 0; i_d2 < day_csv_pathline; i_d2++) {//depth for
                         if (i_d2 < 10) {//
                             name_day = "0" + String(i_d2);
                             }
@@ -162,7 +162,7 @@ for (i = 0; i < alldata[row_label].length; i++) {
                         if  (alldata[row_label][i].slice(1,3) == name_day) {//day determin
                             if  (i_ax == 0) {//day determin
                                // console.log("alldata[i_p][i] = " + alldata[i_p][i])
-                              //  console.log("x_csv[i_d][i_d2+1] = " + x_csv[i_d][i_d2+1])                                
+                              //  console.log("x_csv[i_d][i_d2+1] = " + x_csv[i_d][i_d2+1])
                                 x_csv[i_d][i_d2+1].push(Number(alldata[i_p][i]));
                                 }
                             else if  (i_ax == 1) {//day determin
@@ -171,7 +171,7 @@ for (i = 0; i < alldata[row_label].length; i++) {
                             else if  (i_ax == 2) {//day determin
                                 z_csv[i_d][i_d2+1].push(Number(alldata[i_p][i]));
                                 }
-                            }                           
+                            }
                         }
                     }
                 }
@@ -194,7 +194,7 @@ for (i = 0; i < alldata[row_label].length; i++) {
     for (i_v = 0; i_v < v.length; i_v++) {
         if (alldata[row_label][i][0] == v[i_v]) {
 
-            for (i_d = 0; i_d < depth_csv; i_d++) {//depth for 
+            for (i_d = 0; i_d < depth_csv; i_d++) {//depth for
                 if (i_d < 10) {//
                    name_depth = "0" + String(i_d);
                     }
@@ -203,7 +203,7 @@ for (i = 0; i < alldata[row_label].length; i++) {
                     }
 
                 if (alldata[row_label][i].slice(3,5) == name_depth) {//depth determin
-                    for (i_d2 = 0; i_d2 < day_csv_pathline; i_d2++) {//depth for 
+                    for (i_d2 = 0; i_d2 < day_csv_pathline; i_d2++) {//depth for
                         if (i_d2 < 10) {//
                             name_day = "0" + String(i_d2);
                             }
@@ -215,7 +215,7 @@ for (i = 0; i < alldata[row_label].length; i++) {
 
                             if  (i_v == 0) {//day determin
                               //  console.log("alldata[i_p][i] = " + alldata[i_p][i])
-                              //  console.log("x_csv[i_d][i_d2+1] = " + x_csv[i_d][i_d2+1])                                
+                              //  console.log("x_csv[i_d][i_d2+1] = " + x_csv[i_d][i_d2+1])
                                 S_csv[i_d][i_d2].push(Number(alldata[i_p][i])); //  変数は　i_d2 = 0から入れる   すると３１日前のが空になる
                                 }
                             else if  (i_v == 1) {//day determin
@@ -229,9 +229,9 @@ for (i = 0; i < alldata[row_label].length; i++) {
                                 }
                             else if  (i_v == 4) {//day determin
                                 W_csv[i_d][i_d2].push(Number(alldata[i_p][i]));
-                                }   
+                                }
 
-                            }                           
+                            }
                         }
                     }
                 }
@@ -246,10 +246,10 @@ points[i_p] = new point(Number(alldata[i_p][0]),Number(alldata[i_p][1]),Number(a
 }
 
 
-   // console.log(S_csv)//[depth][day] 
+   // console.log(S_csv)//[depth][day]
 
 
-    console.log(points)//[depth][day] 
+    console.log(points)//[depth][day]
 
 
 
@@ -282,11 +282,11 @@ var car3 = [];
 
      for (i = 0; i < 2; i++) {//depth
         if  (car3[i].year == 10) {//day determin
-              console.log(car3[i].year)//[depth][day]   
+              console.log(car3[i].year)//[depth][day]
 }
 }
 
-    console.log(mycar.make)//[depth][day] 
+    console.log(mycar.make)//[depth][day]
 */
 
 
