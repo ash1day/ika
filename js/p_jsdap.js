@@ -26,7 +26,7 @@ var i_date_jsdap = Math.floor((date_jsdap.getTime() - baseDate_jsdap.getTime()) 
  //});
 
 
- 
+
 
 
 
@@ -109,34 +109,34 @@ var count_jsd = 0;
             	if ((s_w_x<scale_x_lon[i]) && (count_jsd == 0)) {//
             		start_scale_x_lon = i;
             		count_jsd  = 1;
-                }    
+                }
                 else if ((scale_x_lon[i]>e_w_x) && (count_jsd == 1) ){//
             		end_scale_x_lon = i-1;
             		count_jsd = 0;
             		break
-                }   
+                }
             }
             for (i = 0; i < scale_y_lat.length; i++){
             	if ((s_w_y<scale_y_lat[i]) && (count_jsd == 0)) {//
             		start_scale_y_lat = i;
             		count_jsd  = 1;
-                }    
+                }
                 else if ((scale_y_lat[i]>e_w_y) && (count_jsd == 1) ){//
             		end_scale_y_lat = i-1;
             		count_jsd = 0;
             		break
-                }   
+                }
             }
             for (i = 0; i < scale_z_lev.length; i++){
             	if ((s_w_z<scale_z_lev[i]) && (count_jsd == 0)) {//
             		start_scale_z_lev = i;///////////////////////////zのみ違う
             		count_jsd  = 1;
-                }    
+                }
                 else if ((scale_z_lev[i]>e_w_z) && (count_jsd == 1) ){//
             		end_scale_z_lev = i-1;
             		count_jsd = 0;
             		break
-                }   
+                }
             }
 
 
@@ -170,7 +170,7 @@ var num_totalindex_height = end_scale_y_lat - start_scale_y_lat + 1;
         });
     }
 
-    function removeData_ocean(){     
+    function removeData_ocean(){
 	    exit_ocean
 	    .remove();
 
@@ -306,7 +306,7 @@ function get_Scale_S_color (minS,maxS){
 Scale_S_color = d3.scale.linear()
 .domain([minS,maxS])
 .range([v_minS,v_maxS])
-.nice();  
+.nice();
 
 }
 
@@ -317,7 +317,7 @@ function get_Scale_T_color (minT,maxT){
 Scale_T_color = d3.scale.linear()
 .domain([minT,maxT])
 .range([v_minT,v_maxT])
-.nice();  
+.nice();
 
 }
 
@@ -327,16 +327,16 @@ Scale_T_color = d3.scale.linear()
 
 function get_R_2d_ocean (val){
   var R_S_2d = 1.7;
-  /* 
+  /*
         if( val < 10 ) {
             R_S_2d = 1.7;
-            }  
+            }
         else if( (10 < val) && (val < minS) ) {
             R_S_2d = 1.7;
-            } 
+            }
         else if(( minS < val)) {
             R_S_2d = 1.7;
-            } 
+            }
   */
 
   return R_S_2d ;
@@ -349,21 +349,21 @@ function get_R_2d_ocean (val){
 function get_color_target_2d_ocean (val){
     var r = 0;
     var g = 0;
-    var b = 0;  
+    var b = 0;
 
-//console.log(val ) 
-//console.log(typeof(val) ) 
+//console.log(val )
+//console.log(typeof(val) )
     if( val < 30 ) {
     	g = 255;
     	}
 
     else if( val < minS ) {
     	b = 200;
-    	}    	  	
+    	}
     else {
     	r = parseInt(Scale_S_color(val));
     	//r = Scale_S_color(val);
-    //	 console.log(val ) 
+    //	 console.log(val )
  //console.log(r )
     	}
 
@@ -371,7 +371,7 @@ function get_color_target_2d_ocean (val){
     return "rgb(" + String(r) + "," + String(g) + "," + String(b) + ")" ;
   }
 
- 
+
 
 function draw_points_2d_ocean(){//////海書くだけ
 
@@ -387,7 +387,7 @@ console.log(i_date_jsdap)
                         xyzvar.push( [scale_x_lon[x_js], scale_y_lat[y_js], scale_z_lev[z_js],data_jsdap[0][0][0][z_js-start_scale_z_lev][y_js-start_scale_y_lat][x_js-start_scale_x_lon]] );//x,y,z,var
                     }
                 }
-            }   
+            }
          p_ocean = g_ocean.selectAll("circle");
          update_ocean = p_ocean.data(xyzvar);
          enter_ocean = update_ocean.enter();
@@ -427,30 +427,30 @@ console.log(i_date_jsdap)
                         xyzvar.push( [scale_x_lon[x_js], scale_y_lat[y_js], scale_z_lev[z_js],data_jsdap[0][0][0][z_js-start_scale_z_lev][y_js-start_scale_y_lat][x_js-start_scale_x_lon]] );//x,y,z,var
                     }
                 }
-            }   
+            }
 
         var xyin = [];
             for (i_p = 1; i_p < points.length; i_p++){
                 for (i_d2 = 0; i_d2 < det_day_3d; i_d2++){
                     if ((points[i_p].year == year_target ) && ( points[i_p].month == month_target) && (points[i_p].day == day_target)) {//target date に合ってたら描画
-                        xyin = xyin.concat(points[i_p].xyz[depth_target][i_d2]);    
-                        }   
+                        xyin = xyin.concat(points[i_p].xyz[depth_target][i_d2]);
+                        }
                     }
                 }
-       // console.log(xyzvar)  
+       // console.log(xyzvar)
        // console.log(xyin)
         //console.log(xyzvar);
         length_d_ocean = xyzvar.length;
         xyzvar = xyzvar.concat(xyin);
-       // console.log(xyzvar)  
+       // console.log(xyzvar)
        if (variable == "S") {
             minS = min_val_S ;
-            maxS = max_val_S ;   
+            maxS = max_val_S ;
             get_Scale_S_color (minS,maxS)
        }
        else if (variable == "T") {
             minT = min_val_T ;
-            maxT = max_val_T ; 
+            maxT = max_val_T ;
             get_Scale_T_color (minT,maxT)
        };
 
@@ -474,10 +474,10 @@ g_ocean.selectAll("text")
     .data(xyzvar)
     .text(function(d,i){
         return get_text_pathline (i);})
-    .attr("x", function(d) { 
+    .attr("x", function(d) {
         return xScale(d[0]) ;
     })
-    .attr("y", function(d) { 
+    .attr("y", function(d) {
         return yScale(d[1]) ;
     })
     .attr("font-family", "sans-serif")
@@ -505,7 +505,7 @@ g_ocean.selectAll("text")
 var path ;
 var fishingpointscpue_gloval = [];
 
- 
+
 //draw_points_2d_ocean_pathline_suikai(1)
 
     svg_pathline_2d.append("g")
@@ -541,7 +541,7 @@ var fishingpointscpue_gloval = [];
 var path_zoom ;
 var fishingpointscpue_gloval = [];
 
- 
+
 //draw_points_2d_ocean_pathline_suikai(1)
 
     svg_pathline_2d_zoom.append("g")
@@ -586,7 +586,7 @@ function draw_onlyland(xyzvar){////
 
 
 function draw_points_2d_ocean_pathline_suikai(det_day_3d){////水塊と　パスラインと　海　リク
- 
+
 console.log("day_target_ocean2"  +  day_target_ocean2)
 det_date(day_target_ocean2)
 
@@ -607,27 +607,27 @@ console.log(day_target_ocean2)
                                 get_v_dence(scale_z_lev[z_js],data_jsdap_S[0][0][0][z_js-start_scale_z_lev][y_js-start_scale_y_lat][x_js-start_scale_x_lon],data_jsdap_T[0][0][0][z_js-start_scale_z_lev][y_js-start_scale_y_lat][x_js-start_scale_x_lon])] );//x,y,z,var
                             }//get_v_dence(z[m],salinity,tempereture)
                         }
-                    }  
-           
+                    }
+
                   // var xyin = [];
                     //    for (i_p = 1; i_p < points.length; i_p++){
                      //       for (i_d2 = 0; i_d2 < det_day_3d; i_d2++){
-                                   //   console.log( "i_p = " + i_p + "  points.length = " + points.length) 
-                                   ///    console.log( "i_d2 = " + i_d2 + "  det_day_3d = " + det_day_3d)     
-                                   // console.log("points[i_p].year = " + points[i_p].year) 
-                                                                                                 
+                                   //   console.log( "i_p = " + i_p + "  points.length = " + points.length)
+                                   ///    console.log( "i_d2 = " + i_d2 + "  det_day_3d = " + det_day_3d)
+                                   // console.log("points[i_p].year = " + points[i_p].year)
+
                      //           if ((points[i_p].year == year_target ) && ( points[i_p].month == month_target) && (points[i_p].day == day_target)) {//target date に合ってたら描画
-                     //               xyin = xyin.concat(points[i_p].xyz[depth_target][i_d2]);    
+                     //               xyin = xyin.concat(points[i_p].xyz[depth_target][i_d2]);
                                    // console.log("ff")
-                     //               }   
+                     //               }
                      //           }
                      //       }
-              
+
                    // console.log(xyin)
                     //console.log(xyzvar);
                     length_d_ocean = xyzvar.length;
                  //   xyzvar = xyzvar.concat(xyin);
-                 //   console.log(xyzvar)  
+                 //   console.log(xyzvar)
 draw_pathline(det_day_3d);
 
 
@@ -655,10 +655,10 @@ draw_pathline(det_day_3d);
                         .data(xyzvar)
                         .text(function(d,i){
                             return get_text_pathline (i);})
-                        .attr("x", function(d) { 
+                        .attr("x", function(d) {
                             return xScale(d[0]) ;
                         })
-                        .attr("y", function(d) { 
+                        .attr("y", function(d) {
                             return yScale(d[1]) ;
                         })
                         .attr("font-family", "sans-serif")
@@ -667,7 +667,7 @@ draw_pathline(det_day_3d);
                        //.attr("stroke", "white")
                        ;
 
-                   
+
 
 
 
@@ -681,12 +681,14 @@ var n_c_point_gloval;//1日当たりの漁獲座標の数を把握
 
 
 function draw_pathline(devi_day_target){
+    console.log("draw_pathlinedraw_pathlinedraw_pathlinedraw_pathlinedraw_pathline");
+    console.log(devi_day_target);
                    var temp_xyin;
                    var temp_xyin2;
                    var xyin = [];
                    var xyin_fishingpoints = [];
                    var temp_xyin_everyoneday;
-                   var xyin_everyoneday = [];                   
+                   var xyin_everyoneday = [];
                    var c_point = 0;
                    console.log("draw_pathline")
 
@@ -696,26 +698,26 @@ function draw_pathline(devi_day_target){
                    };
 
                         for (i_p = 1; i_p < points.length; i_p++){
-                            if ((points[i_p].year == year_target ) && ( points[i_p].month == month_target) && (points[i_p].day == day_target)) {//target date に合ってたら描画                        
+                            if ((points[i_p].year == year_target ) && ( points[i_p].month == month_target) && (points[i_p].day == day_target)) {//target date に合ってたら描画
                                   xyin.push([]);
-                                  for (i_d2 = 0; i_d2 < devi_day_target; i_d2++){                                                                                           
+                                  for (i_d2 = 0; i_d2 < devi_day_target; i_d2++){
                                   //  xyin[c_point].push(points[i_p].xyz[depth_target][i_d2]);
                                   if (i_d2 == 0) {///1点しかない初日用
-                                    temp_xyin2 = [];  
-                                    temp_xyin2 = temp_xyin2.concat(points[i_p].xyz[depth_target][i_d2]);   
+                                    temp_xyin2 = [];
+                                    temp_xyin2 = temp_xyin2.concat(points[i_p].xyz[depth_target][i_d2]);
                                     temp_xyin2[0] = temp_xyin2[0].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2],points[i_p].T[depth_target][i_d2]);
-                                    xyin[c_point] = xyin[c_point].concat(temp_xyin2);  
+                                    xyin[c_point] = xyin[c_point].concat(temp_xyin2);
 
 
                                     }
                                   else if (i_d2 > 0) {///
                                   //  console.log("dd")
-                                    temp_xyin2 = [];  
-                                    temp_xyin2 = temp_xyin2.concat(points[i_p].xyz[depth_target][i_d2]);   
+                                    temp_xyin2 = [];
+                                    temp_xyin2 = temp_xyin2.concat(points[i_p].xyz[depth_target][i_d2]);
                                   //  temp_xyin2[0] = temp_xyin2[0].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2-1]);//最初のは前の日やカラ
-                                   // temp_xyin2[n_devi_day-1] = temp_xyin2[n_devi_day-1].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2]);// さいごのがta-rgetdayやから      
+                                   // temp_xyin2[n_devi_day-1] = temp_xyin2[n_devi_day-1].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2]);// さいごのがta-rgetdayやから
                                     temp_xyin2[0] = temp_xyin2[0].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2],points[i_p].T[depth_target][i_d2],(temp_xyin2[n_devi_day-1][2] - temp_xyin2[0][2]),temp_xyin2[n_devi_day-1][2]);//最初でしか色付けられないからここに色付ける要素いれる
-                                    xyin[c_point] = xyin[c_point].concat(temp_xyin2);  
+                                    xyin[c_point] = xyin[c_point].concat(temp_xyin2);
                                     draw_pathline_daydev(temp_xyin2);////これ流跡線   テｍｐ　の方でやってる
                                     if (draw3dcode == 1) {
                                     draw_pathlinefor3dtube(temp_xyin2,i_p,i_d2);
@@ -730,23 +732,23 @@ function draw_pathline(devi_day_target){
                                         console.log((temp_xyin2[n_devi_day-1][2] - temp_xyin2[0][2]))
                                     };*/
                                    // console.log(temp_xyin2)
-                                  // xyin[c_point] = xyin[c_point].concat(points[i_p].xyz[depth_target][i_d2]);  
+                                  // xyin[c_point] = xyin[c_point].concat(points[i_p].xyz[depth_target][i_d2]);
                                 //    temp_xyin_everyoneday = [];///一日前毎の座標のデータいれる　漁獲日のはなしで
                                  //   temp_xyin_everyoneday = temp_xyin_everyoneday.concat(points[i_p].xyz[depth_target][i_d2][n_devi_day-1]);
                                  //   console.log(temp_xyin_everyoneday);
-                                   // temp_xyin_everyoneday[n_devi_day-1] = temp_xyin_everyoneday[n_devi_day-1].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2]);// さいごのがta-rgetdayやから 
+                                   // temp_xyin_everyoneday[n_devi_day-1] = temp_xyin_everyoneday[n_devi_day-1].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2]);// さいごのがta-rgetdayやから
                                    // console.log(temp_xyin_everyoneday);
-                                 //   xyin_everyoneday[c_point] = xyin_everyoneday[c_point].concat(temp_xyin_everyoneday); 
+                                 //   xyin_everyoneday[c_point] = xyin_everyoneday[c_point].concat(temp_xyin_everyoneday);
  //console.log(c_point);
  //console.log(xyin);
   //console.log(xyin[c_point]);
-                                    temp_xyin_everyoneday = [];  
-                                    temp_xyin_everyoneday = temp_xyin_everyoneday.concat(points[i_p].xyz[depth_target][i_d2][n_devi_day-1],points[i_p].cpue,points[i_p].S[depth_target][i_d2],points[i_p].T[depth_target][i_d2],(points[i_p].xyz[depth_target][i_d2][n_devi_day-1][2] - points[i_p].xyz[depth_target][i_d2][0][2]),points[i_p].xyz[depth_target][i_d2][n_devi_day-1][2]);   
+                                    temp_xyin_everyoneday = [];
+                                    temp_xyin_everyoneday = temp_xyin_everyoneday.concat(points[i_p].xyz[depth_target][i_d2][n_devi_day-1],points[i_p].cpue,points[i_p].S[depth_target][i_d2],points[i_p].T[depth_target][i_d2],(points[i_p].xyz[depth_target][i_d2][n_devi_day-1][2] - points[i_p].xyz[depth_target][i_d2][0][2]),points[i_p].xyz[depth_target][i_d2][n_devi_day-1][2]);
                                   //  temp_xyin_everyoneday[0] = temp_xyin_everyoneday[0].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2-1]);//最初のは前の日やカラ
-                                   // temp_xyin_everyoneday[n_devi_day-1] = temp_xyin_everyoneday[n_devi_day-1].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2]);// さいごのがta-rgetdayやから      
-                                     //console.log(temp_xyin_everyoneday);                                     
+                                   // temp_xyin_everyoneday[n_devi_day-1] = temp_xyin_everyoneday[n_devi_day-1].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2]);// さいごのがta-rgetdayやから
+                                     //console.log(temp_xyin_everyoneday);
                                   //  temp_xyin_everyoneday = temp_xyin_everyoneday.concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2],points[i_p].T[depth_target][i_d2]);//最初でしか色付けられないからここに色付ける要素いれる  z は密度計算用
-                                  //  console.log(temp_xyin_everyoneday);                             
+                                  //  console.log(temp_xyin_everyoneday);
                                     xyin_everyoneday = xyin_everyoneday.concat([temp_xyin_everyoneday]);  //●書くときは全部並べて格納
  //console.log(xyin_everyoneday);
                                     }
@@ -757,12 +759,12 @@ function draw_pathline(devi_day_target){
                                    if (i_d2 == 0) {///circleで漁獲店書くためのもの
                              //       console.log("depth_target = " + depth_target)
                                     //                                    console.log( points[i_p].xyz[depth_target])
-                                    temp_xyin = [];  
-                                    temp_xyin = temp_xyin.concat(points[i_p].xyz[depth_target][i_d2]);   
-                                    temp_xyin[0] = temp_xyin[0].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2],points[i_p].T[depth_target][i_d2]);   
-                                    xyin_fishingpoints = xyin_fishingpoints.concat(temp_xyin);   
-                                   };                                  
-                                    }   
+                                    temp_xyin = [];
+                                    temp_xyin = temp_xyin.concat(points[i_p].xyz[depth_target][i_d2]);
+                                    temp_xyin[0] = temp_xyin[0].concat(points[i_p].cpue,points[i_p].S[depth_target][i_d2],points[i_p].T[depth_target][i_d2]);
+                                    xyin_fishingpoints = xyin_fishingpoints.concat(temp_xyin);
+                                   };
+                                    }
 
                                 c_point = c_point + 1;//漁獲店用
                                 }
@@ -773,9 +775,9 @@ function draw_pathline(devi_day_target){
                             fishingpointscpue_gloval = xyin_fishingpoints;
                      //   console.log(xyin_everyoneday)
                                 //                console.log(xyin[0])
-                        xyin_fishingpoints = xyin_fishingpoints.concat(xyin_everyoneday);   //////ここで連結してるから　xyin_fishingpoints　これを使えばいい                           
+                        xyin_fishingpoints = xyin_fishingpoints.concat(xyin_everyoneday);   //////ここで連結してるから　xyin_fishingpoints　これを使えばいい
                       // console.log(xyin_fishingpoints)
-                   
+
                         if (draw3dcode == 1) {
                          draw_pathlinefor3d_sphere (xyin_fishingpoints)////for3d
                         };
@@ -796,7 +798,7 @@ function draw_pathline(devi_day_target){
                            path = svg_pathline_2d.append('path')
                           .attr({
                             'd': line(xyin[i_everypath]),
-                            'stroke': (function(d,i) { 
+                            'stroke': (function(d,i) {
                                // console.log("fdsgts i_everypath = " + i_everypath)
                                // console.log( xyin[i_everypath])
                                // console.log("fdsgts i = " + i)
@@ -812,14 +814,14 @@ function draw_pathline(devi_day_target){
 
                           function draw_pathline_daydev_remove(temp_xyin2){
                                 svg_pathline_2d.selectAll("path")
-                               .remove()  
+                               .remove()
                                   svg_pathline_2d_zoom.selectAll("path")
-                                .remove()                            
+                                .remove()
                           }
 
                           function draw_pathline_daydev(temp_xyin2){
 
-       
+
                                                        line = d3.svg.line()
                           // interpolate指定で点のつなぎ方を指定する。
                           .interpolate('basis')
@@ -844,7 +846,7 @@ function draw_pathline(devi_day_target){
                                 })*/
                           .attr({
                             'd': line(temp_xyin2),
-                            'stroke': (function(d,i) { 
+                            'stroke': (function(d,i) {
                                // console.log("fdsgts i_everypath = " + i_everypath)
                                // console.log( xyin[i_everypath])
                                // console.log("fdsgts i = " + i)
@@ -881,7 +883,7 @@ function draw_pathline(devi_day_target){
                                 })*/
                           .attr({
                             'd': line(temp_xyin2),
-                            'stroke': (function(d,i) { 
+                            'stroke': (function(d,i) {
                                 return get_strokecolor_pathline(i,temp_xyin2[0][3],temp_xyin2[0][4],temp_xyin2[0][5],temp_xyin2[0][6],temp_xyin2[0][7]) ;}),
                             'stroke-width': (function(d,i) {return get_strokewidth_pathline(i,temp_xyin2[0][3],temp_xyin2[0][4],temp_xyin2[0][5]);}),
                             'fill': 'none',
@@ -891,7 +893,7 @@ function draw_pathline(devi_day_target){
                           }
 
 //console.log(xyin_fishingpoints)
-                 
+
 
                     p_svg_pathline_2d_g = svg_pathline_2d_g.selectAll("circle");
                    // svg222 = svg22.selectAll("circle");
@@ -904,7 +906,7 @@ function draw_pathline(devi_day_target){
 
 
                            //     svg_pathline_2d.selectAll("path")
-                           //    .remove()  
+                           //    .remove()
 
 
 
@@ -971,13 +973,13 @@ function draw_pathline(devi_day_target){
        // return year_target +"/"+ month_target +"/"+ (day_target-devi_day_target)+".."+devi_day_target+"日前"+".."+"depth = "+depth_target+"[m]";
       // return "Ocean: ''"+ month_target +"/"+ (day_target-devi_day_target)+"'', "+"Date Back: ''"+ devi_day_target +" days'', "+"Depth: ''"+scale_z_lev[depth_target]+" m''";
      //   return  "Fishing day: ''" + month_target +"/"+ day_target + "''" + "Ocean of ''"+ month_target +"/"+ (day_target-devi_day_target)+"'', ''"+ devi_day_target +"'' days back, "+" ''"+scale_z_lev[depth_target]+"'' m of depth ";
-              
+
             }
 
     else if( i == length_d_ocean){
        // console.log(i)
     // return year_target +"/"+ month_target +"/"+ day_target;
-     // return "Fishing day: ''" + month_target +"/"+ day_target + "''";   
+     // return "Fishing day: ''" + month_target +"/"+ day_target + "''";
     }
 
 
@@ -988,9 +990,9 @@ function draw_pathline(devi_day_target){
 
     function outputData_ocean2(){
     enter_ocean.append("circle")
- 
+
     }
-    function removeData_ocean2(){     
+    function removeData_ocean2(){
         exit_ocean
         .remove();
 
@@ -1014,10 +1016,10 @@ function draw_pathline(devi_day_target){
     enter_pathline_text.append("text")
     .text(function(d,i){
         return get_text_pathline (i);})
-    .attr("x", function(d) { 
+    .attr("x", function(d) {
         return xScale(d[0]) ;
     })
-    .attr("y", function(d) { 
+    .attr("y", function(d) {
         return yScale(d[1]) ;
     })
     .attr("font-family", "sans-serif")
@@ -1027,7 +1029,7 @@ function draw_pathline(devi_day_target){
 
 
     }
-    function removeData_pathline_text(){     
+    function removeData_pathline_text(){
         exit_pathline_text
         .remove();
 
@@ -1037,10 +1039,10 @@ function draw_pathline(devi_day_target){
     update_pathline_text.append("text")
     .text(function(d,i){
         return get_text_pathline (i);})
-    .attr("x", function(d) { 
+    .attr("x", function(d) {
         return xScale(d[0]) ;
     })
-    .attr("y", function(d) { 
+    .attr("y", function(d) {
         return yScale(d[1]) ;
     })
     .attr("font-family", "sans-serif")
@@ -1054,7 +1056,7 @@ function get_R_2d_ocean2 (val,i){
   //var R_S_2d = 1.7;
 
     if( i < length_d_ocean ) {
-        return 1.7; 
+        return 1.7;
     }
     else if( length_d_ocean <= i){
      return get_R_S_pathline_2d(i-length_d_ocean);
@@ -1066,13 +1068,13 @@ function get_R_2d_ocean2 (val,i){
 function get_color_target_2d_ocean2 (val,i){
     var r = 0;
     var g = 0;
-    var b = 0;  
+    var b = 0;
 
-//console.log(val ) 
-//console.log(typeof(val) ) 
+//console.log(val )
+//console.log(typeof(val) )
 
         //r = Scale_S_color(val);
-    //   console.log(val ) 
+    //   console.log(val )
  //console.log(r )
 
     if( i < length_d_ocean ) {
@@ -1081,7 +1083,7 @@ function get_color_target_2d_ocean2 (val,i){
             }
         else if( val < minS ) {
             b = 200;
-            }           
+            }
         else {
             r = parseInt(Scale_S_color(val));
             }
@@ -1098,9 +1100,9 @@ function get_color_target_2d_ocean2 (val,i){
 
    function outputData_ocean2_suikai(){
     enter_ocean.append("circle")
- 
+
     }
-    function removeData_ocean2_suikai(){     
+    function removeData_ocean2_suikai(){
         exit_ocean
         .remove();
 
@@ -1131,8 +1133,8 @@ function get_R_2d_ocean2_suikai (i,salinity,tempereture,dence){
         if( salinity < thre_island_S ) {//大陸
             R_2d_suikai = average_R;
             }
-        else if( (minT < tempereture) && (tempereture < maxT) 
-                 && (minS < salinity) && (salinity < maxS) 
+        else if( (minT < tempereture) && (tempereture < maxT)
+                 && (minS < salinity) && (salinity < maxS)
                  && (mindence < dence) && (dence < maxdence ) ) {
             R_2d_suikai = average_R;
             }
@@ -1158,13 +1160,13 @@ function get_color_target_2d_ocean2_suikai (i,salinity,tempereture,dence){
             code = "#006400";
             }
         else if( (min_T_OW < tempereture) && (tempereture < max_T_OW) //OW
-                 && (min_S_OW < salinity) && (salinity < max_S_OW) 
+                 && (min_S_OW < salinity) && (salinity < max_S_OW)
                  && (min_dence_OW < dence) && (dence < max_dence_OW ) ) {
                     code = "#6495ED";
             }
 
         else if( (min_T_KW < tempereture) && (tempereture < max_T_KW) //KW
-                 && (min_S_KW < salinity) && (salinity < max_S_KW) 
+                 && (min_S_KW < salinity) && (salinity < max_S_KW)
                  && (min_dence_KW < dence) && (dence < max_dence_KW ) ) {
                     code = "#FFA07A";
             }
@@ -1191,8 +1193,8 @@ function get_color_target_2d_ocean2_suikai2 (i,salinity,tempereture,dence){
         if( salinity < thre_island_S ) {//大陸
             code = "#006400";
             }
-        else if( (minT < tempereture) && (tempereture < maxT) 
-                 && (minS < salinity) && (salinity < maxS) 
+        else if( (minT < tempereture) && (tempereture < maxT)
+                 && (minS < salinity) && (salinity < maxS)
                  && (mindence < dence) && (dence < maxdence ) ) {
 
                 if( color_suikai_fix == 0 ) {//OW
@@ -1229,14 +1231,14 @@ function get_color_target_2d_ocean2_suikai2 (i,salinity,tempereture,dence){
 function get_color_target_2d_ocean2_suikai2 (i,salinity,tempereture,dence){
     var r = 0;
     var g = 0;
-    var b = 0;  
+    var b = 0;
 
     if( i < length_d_ocean ) {
         if( salinity < thre_island_S ) {//大陸
             g = 255;
             }
-        else if( (minT < tempereture) && (tempereture < maxT) 
-                 && (minS < salinity) && (salinity < maxS) 
+        else if( (minT < tempereture) && (tempereture < maxT)
+                 && (minS < salinity) && (salinity < maxS)
                  && (mindence < dence) && (dence < maxdence ) ) {
             r = parseInt(Scale_S_color(salinity));
             //r = 200;
@@ -1262,7 +1264,7 @@ function get_strokcolor_target_2d_ocean2_suikai (i,salinity,tempereture,dence){
 
 
     if( i < length_d_ocean ) {
-       
+
     }
     else if( length_d_ocean <= i){
      //return "#7FFFD4";
@@ -1293,7 +1295,7 @@ function get_strokcolor_target_2d_ocean2_suikai (i,salinity,tempereture,dence){
 
 
 function draw_points_2d_ocean_pathline_suikai_T(det_day_3d){////水塊と　パスラインと　海　リク
- 
+
 console.log("day_target_ocean2"  +  day_target_ocean2)
 det_date(day_target_ocean2)
 
@@ -1311,29 +1313,29 @@ console.log(day_target_ocean2)
                                 xyzvar.push( [scale_x_lon[x_js], scale_y_lat[y_js], scale_z_lev[z_js], data_jsdap_T[0][0][0][z_js-start_scale_z_lev][y_js-start_scale_y_lat][x_js-start_scale_x_lon] ] );//x,y,z,var
                             }//get_v_dence(z[m],salinity,tempereture)
                         }
-                    }  
-           
+                    }
+
                    var xyin = [];
                         for (i_p = 1; i_p < points.length; i_p++){
                             for (i_d2 = 0; i_d2 < det_day_3d; i_d2++){
-                                   //   console.log( "i_p = " + i_p + "  points.length = " + points.length) 
-                                   ///    console.log( "i_d2 = " + i_d2 + "  det_day_3d = " + det_day_3d)     
-                                   // console.log("points[i_p].year = " + points[i_p].year) 
-                                                                                                 
+                                   //   console.log( "i_p = " + i_p + "  points.length = " + points.length)
+                                   ///    console.log( "i_d2 = " + i_d2 + "  det_day_3d = " + det_day_3d)
+                                   // console.log("points[i_p].year = " + points[i_p].year)
+
                                 if ((points[i_p].year == year_target ) && ( points[i_p].month == month_target) && (points[i_p].day == day_target)) {//target date に合ってたら描画
-                                    xyin = xyin.concat(points[i_p].xyz[depth_target][i_d2]);    
+                                    xyin = xyin.concat(points[i_p].xyz[depth_target][i_d2]);
                                    // console.log("ff")
-                                    }   
+                                    }
                                 }
                             }
-              
+
                     //console.log(xyin)
                     console.log(xyzvar);
                     length_d_ocean = xyzvar.length;
                     xyzvar = xyzvar.concat(xyin);
-                    console.log(z_lev_2dfiz)  
-  
-      
+                    console.log(z_lev_2dfiz)
+
+
 
 
 
@@ -1356,10 +1358,10 @@ console.log(day_target_ocean2)
                         .data(xyzvar)
                         .text(function(d,i){
                             return get_text_pathline (i);})
-                        .attr("x", function(d) { 
+                        .attr("x", function(d) {
                             return xScale(d[0]) ;
                         })
-                        .attr("y", function(d) { 
+                        .attr("y", function(d) {
                             return yScale(d[1]) ;
                         })
                         .attr("font-family", "sans-serif")
@@ -1368,7 +1370,7 @@ console.log(day_target_ocean2)
                        //.attr("stroke", "white")
                        ;
 
-                   
+
 
 
 
@@ -1379,9 +1381,9 @@ console.log(day_target_ocean2)
 
    function outputData_ocean2_suikai_T(){
     enter_ocean.append("circle")
- 
+
     }
-    function removeData_ocean2_suikai_T(){     
+    function removeData_ocean2_suikai_T(){
         exit_ocean
         .remove();
 
@@ -1451,7 +1453,7 @@ function get_strokcolor_target_2d_ocean2_suikai_T (i,tempereture){
 
 
     if( i < length_d_ocean ) {
-       
+
     }
     else if( length_d_ocean <= i){
      //return "#7FFFD4";
@@ -1468,9 +1470,9 @@ function get_strokcolor_target_2d_ocean2_suikai_T (i,tempereture){
    function outputData_pathline_circle(){
     enter_pathline_circle
     .append("circle")
- 
+
     }
-    function removeData_pathline_circle(){     
+    function removeData_pathline_circle(){
         exit_pathline_circle
         .remove();
 
@@ -1507,9 +1509,9 @@ function get_strokcolor_target_2d_ocean2_suikai_T (i,tempereture){
    function outputData_pathline_circle_zoom(){
     enter_pathline_circle_zoom
     .append("circle")
- 
+
     }
-    function removeData_pathline_circle_zoom(){     
+    function removeData_pathline_circle_zoom(){
         exit_pathline_circle_zoom
         .remove();
 
@@ -1524,7 +1526,7 @@ function get_strokcolor_target_2d_ocean2_suikai_T (i,tempereture){
                                    var y_mouse = d3.mouse(this)[1];
                                console.log("y_mouse  " + x_mouse + "ff" + y_mouse)
                                  var mousePos = d3.mouse(this);
-                               console.log("mousePos  " + mousePos)  
+                               console.log("mousePos  " + mousePos)
 //console.log("get_x_text_2dheat (20,9,2) = " + get_x_text_2dheat (20,9,2))
 
 //total_pathlineinfo_create(d[3]);
@@ -1541,10 +1543,10 @@ total_pathlineinfo_create(d[3]);
                 //        .data(xyzvar)
                 //        .text(function(d,i){
                 //            return get_text_pathline (i);})
-                //        .attr("x", function(d) { 
+                //        .attr("x", function(d) {
                  //           return xScale(d[0]) ;
                  //       })
-                 //       .attr("y", function(d) { 
+                 //       .attr("y", function(d) {
                  //           return yScale(d[1]) ;
                  //       })
                   //      .attr("font-family", "sans-serif")
@@ -1610,7 +1612,7 @@ return 2;
 function get_pathline_circle_color (i,cpue,S,T,updown,z){
 
   if (i<n_c_point_gloval) {
- return HSVtoColorCode(Scale_cpue_HSV_H(cpue),1,1);   
+ return HSVtoColorCode(Scale_cpue_HSV_H(cpue),1,1);
 }
 else if (n_c_point_gloval<=i) {
 return get_strokecolor_pathline_total(i,cpue,S,T,updown,z);
@@ -1630,7 +1632,7 @@ function get_strokcolor_pathline_circle (i,cpue){
    //   // return "#FF0000";
    // }
    // else {
-       // return "#FFFF00";       
+       // return "#FFFF00";
    // };
   return "white";
 
@@ -1690,18 +1692,18 @@ else if (pathlinecolormode == 4) {//CPUE
   //console.log()
   var suikai_kari;
         if( (min_T_OW < T) && (T < max_T_OW) //OW
-                 && (min_S_OW < S) && (S < max_S_OW) 
+                 && (min_S_OW < S) && (S < max_S_OW)
                  && (min_dence_OW < get_v_dence(z,S,T)) && (get_v_dence(z,S,T) < max_dence_OW ) ) {
                     suikai_kari = 240;
              //   console.log("OW")
              //   console.log(min_T_OW + "< " + T + " < " + max_T_OW)
               //  console.log(min_S_OW + "< " + S + " < " + max_S_OW)
-             //   console.log(min_dence_OW + "< " + get_v_dence(z,S,T) + " < " + max_dence_OW)    
-             //   console.log("z = " + z)                        
+             //   console.log(min_dence_OW + "< " + get_v_dence(z,S,T) + " < " + max_dence_OW)
+             //   console.log("z = " + z)
             }
 
         else if( (min_T_KW < T) && (T < max_T_KW) //KW
-                 && (min_S_KW < S) && (S < max_S_KW) 
+                 && (min_S_KW < S) && (S < max_S_KW)
                  && (min_dence_KW < get_v_dence(z,S,T)) && (get_v_dence(z,S,T) < max_dence_KW ) ) {
                     suikai_kari = 359;   console.log("KW")
             }
@@ -1731,42 +1733,42 @@ var max_cpue = 35;
 Scale_cpue = d3.scale.linear()
 .domain([min_cpue,max_cpue])
 .range([1.5,3.0])
-.nice(); 
+.nice();
 
 Scale_cpue_zoom = d3.scale.linear()
 .domain([min_cpue,max_cpue])
 .range([2,4.0])
-.nice(); 
+.nice();
 
 
 
 Scale_cpue_pathline_width = d3.scale.linear()
 .domain([min_cpue,max_cpue])
 .range([0.5,1])
-.nice(); 
+.nice();
 
 Scale_cpue_pathline_width_zoom = d3.scale.linear()
 .domain([min_cpue,max_cpue])
 .range([2,4])
-.nice(); 
+.nice();
 
 
 
 Scale_color_cpue = d3.scale.linear()
 .domain([min_cpue,max_cpue])
 .range([0,1])
-.nice(); 
+.nice();
 
 Scale_cpue_HSV_H = d3.scale.linear()
 .domain([min_cpue,max_cpue])
 .range([240,359])
-.nice(); 
+.nice();
 
 
 Scale_cpue_HSV_S = d3.scale.linear()
 .domain([min_cpue,max_cpue])
 .range([0,1])
-.nice(); 
+.nice();
 
 
 
@@ -1777,7 +1779,7 @@ var max_S = 34.5;
 Scale_S_HSV_H = d3.scale.linear()
 .domain([min_S,max_S])
 .range([240,359])
-.nice(); 
+.nice();
 
 
 
@@ -1793,7 +1795,7 @@ var max_T = 25;
 Scale_T_HSV_H = d3.scale.linear()
 .domain([min_T,max_T])
 .range([240,359])
-.nice(); 
+.nice();
 
 
 var min_updown = -0.2;
@@ -1802,7 +1804,7 @@ var max_updown = 0.2;
 Scale_updown_HSV_H = d3.scale.linear()
 .domain([min_updown,max_updown])
 .range([240,359])
-.nice(); 
+.nice();
 
 
 
@@ -1877,28 +1879,28 @@ return colorCode;
 
 function HLStoRGB(h, l, s) {
   var r, g, b; // 0..255
- 
+
   while (h < 0) {
     h += 360;
   }
   h = h % 360;
- 
+
   // 特別な場合 saturation = 0
   if (s == 0) {
     // → RGB は V に等しい
     l = Math.round(l * 255);
     return {'r': l, 'g': l, 'b': l, 'type': 'RGB'};
   }
- 
+
   var m2 = (l < 0.5) ? l * (1 + s) : l + s - l * s,
       m1 = l * 2 - m2,
       tmp;
- 
+
   tmp = h + 120;
   if (tmp > 360) {
     tmp = tmp - 360
   }
- 
+
   if (tmp < 60) {
     r = (m1 + (m2 - m1) * tmp / 60);
   } else if (tmp < 180) {
@@ -1908,7 +1910,7 @@ function HLStoRGB(h, l, s) {
   } else {
     r = m1;
   }
- 
+
   tmp = h;
   if (tmp < 60) {
     g = m1 + (m2 - m1) * tmp / 60;
@@ -1919,7 +1921,7 @@ function HLStoRGB(h, l, s) {
   } else {
     g = m1;
   }
- 
+
   tmp = h - 120;
   if (tmp < 0) {
     tmp = tmp + 360
@@ -1933,7 +1935,7 @@ function HLStoRGB(h, l, s) {
   } else {
     b = m1;
   }
- 
+
   return {'r': Math.round(r * 255), 'g': Math.round(g * 255), 'b': Math.round(b * 255), 'type': 'RGB'};
 }
 
@@ -2009,7 +2011,7 @@ console.log( "wwww " + get_strokecolor_pathline_total (0,min_cpue,min_S,min_T,mi
 function colorcode_sort_info_remove (){
     console.log("colorcode_sort_info_remove")
    var  p_svg2_pathlinesort = svg2_pathlinesort.selectAll("rect");
-   p_svg2_pathlinesort.remove()  
+   p_svg2_pathlinesort.remove()
 }
 
 
