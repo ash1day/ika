@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang = "ja">
+	<head>
+		<meta charset="utf-8">
+		<title>FUTAMI.js </title>
+
+
+		<style>
+		.axis path, .axis line{
+			fill : none;
+			stroke: black;
+			shape-rendering: crispEdges;
+		}
+		.axis text {
+			font-family: sans-serif;
+			font-size: 11px;
+		}
+		</style>
+		<style type="text/css">
+		<!--
+
+		div.waku
+		{
+		  /*border:1px solid black;   1pxの黒の枠を付ける */
+		  width :1500px;            /* 横幅を300pxにする */
+		  height:800px;            /* 縦幅を200pxにする */
+		  position:relative;       /* 相対位置指定を宣言 */
+		}
+
+		div.main
+		{
+
+		  width :500px;             /* 横幅を50pxにする */
+		  height:500px;             /* 縦幅を50pxにする */
+		}
+		div.totalocean
+		{
+
+		  border:1px solid black;  /* 1pxの黒の枠を付ける */
+		  width :550px;             /* 横幅を50pxにする */
+		  height:700px;             /* 縦幅を50pxにする */
+		}
+		div.pathline
+		{
+		
+		  width :500px;             /* 横幅を50pxにする */
+		  height:500px;             /* 縦幅を50pxにする */
+		}
+		div.total_heat
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  width :450px;             /* 横幅を50pxにする */
+		  height:550px;             /* 縦幅を50pxにする */
+		}	
+		div.heat
+		{
+		
+		  width :400px;             /* 横幅を50pxにする */
+		  height:500px;             /* 縦幅を50pxにする */
+		}
+		div.heatcolorcode
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  width :40px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}
+
+		div.heatcode_text
+		{
+	
+		  width :20px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}		
+		div.heatcode_text_max
+		{
+		 
+		  width :20px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}		
+		div.heatlabel1
+		{
+		 
+		  width :60px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}	
+		div.heatlabel2
+		{
+		 
+		  width :100px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}	
+		div.l_depth
+		{
+			
+		  width :25px;             /* 横幅を50pxにする */
+		  height:500px;             /* 縦幅を50pxにする */
+		}		
+		div.l_backday
+		{
+		  width :400px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}
+		div.heatlabel_cor
+		{
+			
+		  width :400px;             /* 横幅を50pxにする */
+		  height:40px;             /* 縦幅を50pxにする */
+		}
+		div.oceanlavel
+		{
+		  width :450px;             /* 横幅を50pxにする */
+		  height:40px;             /* 縦幅を50pxにする */
+		}
+		div.zoomocean
+		{
+		  width :400px;             /* 横幅を50pxにする */
+		  height:400px;             /* 縦幅を50pxにする */
+		}	
+		div.total_zoomocean
+		{
+		  width :450px;             /* 横幅を50pxにする */
+		  height:700px;             /* 縦幅を50pxにする */
+		}
+		div#totalocean
+		{
+			background-color: white;
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:20px;               /* 左から50pxの位置に表示 */
+		  top:30px;                /* 上から50pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を２にする */
+		}
+		div#mainocean
+		{
+	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:20px;               /* 左から50pxの位置に表示 */
+		  top:50px;                /* 上から50pxの位置に表示 */
+		  z-index:2;               /* 奥行番号を２にする */
+		}
+		div#mainocean2
+		{
+		 
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:20px;               /* 左から50pxの位置に表示 */
+		  top:50px;                /* 上から50pxの位置に表示 */
+		  z-index:2;               /* 奥行番号を２にする */
+		}
+		div#pathline
+		{
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:20px;               /* 左から50pxの位置に表示 */
+		  top:50px;                /* 上から50pxの位置に表示 */
+		  z-index:3;               /* 奥行番号を２にする */
+		}
+		div#total_heat
+		{
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:1050px;               /* 左から80pxの位置に表示 */
+		  top:30px;                /* 上から80pxの位置に表示 */
+		  z-index:0;               /* 奥行番号を１にする */
+		}	
+		div#subheat
+		{
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:20px;               /* 左から80pxの位置に表示 */
+		  top:100px;                /* 上から80pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を１にする */
+		}
+		div#heatcolorcode
+		{
+				  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:350px;               /* 左から80pxの位置に表示 */
+		  top:-10px;                /* 上から80pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を１にする */
+		}
+
+		div#heatcode_text
+		{
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:320px;               /* 左から80pxの位置に表示 */
+		  top:-5px;                /* 上から80pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を１にする */
+		}
+		div#heatcode_text_max
+		{
+	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:395px;               /* 左から80pxの位置に表示 */
+		  top:-5px;                /* 上から80pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を１にする */
+		}
+		div#heatlabel1
+		{
+					
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:-20px;               /* 左から80pxの位置に表示 */
+		  top:10px;                /* 上から80pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を１にする */
+		}	
+		div#heatlabel2
+		{
+
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:50px;               /* 左から80pxの位置に表示 */
+		  top:-5px;                /* 上から80pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を１にする */
+		}
+
+		div#l_depth
+		{
+	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から80pxの位置に表示 */
+		  top:0px;                /* 上から80pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を１にする */
+		}
+		div#l_backday
+		{
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:20px;               /* 左から80pxの位置に表示 */
+		  top:15px;                /* 上から80pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を１にする */
+		}
+		div#heatlabel_cor
+		{
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:5px;               /* 左から80pxの位置に表示 */
+		  top:-70px;                /* 上から80pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を１にする */
+		}
+		div#oceanlavel
+		{
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:40px;               /* 左から80pxの位置に表示 */
+		  top:-40px;                /* 上から80pxの位置に表示 */
+		  z-index:3;               /* 奥行番号を１にする */
+		}
+		div#oceanlavel_zoom
+		{
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:130px;               /* 左から80pxの位置に表示 */
+		  top:-40px;                /* 上から80pxの位置に表示 */
+		  z-index:3;               /* 奥行番号を１にする */
+		}
+		div#total_zoomocean
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:580px;               /* 左から80pxの位置に表示 */
+		  top:30px;                /* 上から80pxの位置に表示 */
+		  z-index:3;               /* 奥行番号を１にする */
+		}
+		div#zoomocean
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:20px;               /* 左から80pxの位置に表示 */
+		  top:140px;                /* 上から80pxの位置に表示 */
+		  z-index:3;               /* 奥行番号を１にする */
+		}
+		div#zoomocean_pathline
+		{
+			  border:1px solid black;  /* 1pxの緑の枠を付ける */	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:20px;               /* 左から80pxの位置に表示 */
+		  top:140px;                /* 上から80pxの位置に表示 */
+		  z-index:4;               /* 奥行番号を１にする */
+		}
+		div.colorcode_cpue
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  width :10px;             /* 横幅を50pxにする */
+		  height:40px;             /* 縦幅を50pxにする */
+		}
+		div#colorcode_cpue
+		{
+				
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:371px;               /* 左から80pxの位置に表示 */
+		  top:19px;                /* 上から80pxの位置に表示 */
+		  z-index:5;               /* 奥行番号を１にする */
+		}
+
+
+
+		div.labal_colorcode_cpue
+		{
+		  width :20px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}
+		div#labal_colorcode_cpue1
+		{
+
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:367px;               /* 左から50pxの位置に表示 */
+		  top:-1px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div#labal_colorcode_cpue2
+		{
+
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:385px;               /* 左から50pxの位置に表示 */
+		  top:9px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div#labal_colorcode_cpue3
+		{
+	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:385px;               /* 左から50pxの位置に表示 */
+		  top:39px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+
+		div.colorcode_pathinfo_S
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  width :6px;             /* 横幅を50pxにする */
+		  height:40px;             /* 縦幅を50pxにする */
+		}
+		div.total_labal_colorcode_pathinfo_S
+		{
+		  width :27px;             /* 横幅を50pxにする */
+		  height:53px;             /* 縦幅を50pxにする */
+		}
+		div#total_labal_colorcode_pathinfo_S
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+				background-color: white;	  
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:500px;               /* 左から50pxの位置に表示 */
+		  top:4px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}		
+		div#colorcode_pathinfo_S
+		{
+				
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:2px;               /* 左から80pxの位置に表示 */
+		  top:9px;                /* 上から80pxの位置に表示 */
+		  z-index:5;               /* 奥行番号を１にする */
+		}
+		div#labal_colorcode_pathinfo_S
+		{
+
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:5px;               /* 左から50pxの位置に表示 */
+		  top:-6px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div#labal_colorcode_pathinfo_S2
+		{
+
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:11px;               /* 左から50pxの位置に表示 */
+		  top:0px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div#labal_colorcode_pathinfo_S3
+		{
+	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:11px;               /* 左から50pxの位置に表示 */
+		  top:32px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div#labal_colorcode_pathinfo_T2
+		{
+
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:12px;               /* 左から50pxの位置に表示 */
+		  top:0px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div#labal_colorcode_pathinfo_T3
+		{
+	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:12px;               /* 左から50pxの位置に表示 */
+		  top:32px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+
+
+
+
+		div.total_labal_colorcode_pathinfo_T
+		{
+		  width :27px;             /* 横幅を50pxにする */
+		  height:53px;             /* 縦幅を50pxにする */
+		}
+		div#total_labal_colorcode_pathinfo_T
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+				background-color: white;	  
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:30px;               /* 左から50pxの位置に表示 */
+		  top:-1px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}		
+
+		div.total_labal_colorcode_pathinfo_suikai
+		{
+		  width :27px;             /* 横幅を50pxにする */
+		  height:53px;             /* 縦幅を50pxにする */
+		}
+		div#total_labal_colorcode_pathinfo_suikai
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+				background-color: white;	  
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:60px;               /* 左から50pxの位置に表示 */
+		  top:-1px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}		
+		div.total_labal_colorcode_cpue
+		{
+		  width :30px;             /* 横幅を50pxにする */
+		  height:60px;             /* 縦幅を50pxにする */
+		}
+		div#total_labal_colorcode_cpue
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+				background-color: white;	  
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:365px;               /* 左から50pxの位置に表示 */
+		  top:4px;                /* 上から50pxの位置に表示 */
+		  z-index:4;               /* 奥行番号を２にする */
+		}
+
+
+
+		div.Bottun
+		{
+		  width :300px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#Bottun
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:200px;               /* 左から50pxの位置に表示 */
+		  top:420px;                /* 上から50pxの位置に表示 */
+		  z-index:7;               /* 奥行番号を２にする */
+		}
+		div.label_Bottun
+		{
+		  width :200px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_Bottun
+		{
+		  border:1px solid black;  /* 1pxの緑の枠を付ける */
+	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:-90px;               /* 左から50pxの位置に表示 */
+		  top:-16px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}		
+
+		div.label_lat_lon
+		{
+		  width :20px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}
+		div#label_lat
+		{
+
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:0px;                /* 上から50pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を２にする */
+		}
+		div#label_lon
+		{
+
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:385px;               /* 左から50pxの位置に表示 */
+		  top:365px;                /* 上から50pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を２にする */
+		}
+		div.heatlabel_range
+		{
+		  width :300px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}
+		div#heatlabel_range
+		{
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:10px;                /* 上から50pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday
+		{
+		  width :100px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday
+		{
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:400px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+				div.label_fishingday_change
+		{
+		  width :80px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_change
+		{
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:21px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday_depth
+		{
+		  width :100px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_depth
+		{
+	
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:0px;               /* 左から50pxの位置に表示 */
+		  top:25px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday_backday
+		{
+		  width :100px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_backday
+		{
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:0px;               /* 左から50pxの位置に表示 */
+		  top:50px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday_colorsort
+		{
+		  width :100px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_colorsort
+		{    /* 1pxの緑の枠を付ける border:1px solid black;*/
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:0px;               /* 左から50pxの位置に表示 */
+		  top:90px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday_depth_change
+		{
+		  width :80px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_depth_change
+		{
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:46px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday_backday_change
+		{
+		  width :80px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_backday_change
+		{		
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:71px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday_change_bottun
+		{
+		  width :300px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_change_bottun
+		{
+				
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:170px;               /* 左から50pxの位置に表示 */
+		  top:16px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday_depth_change_bottun
+		{
+		  width :300px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_depth_change_bottun
+		{
+			 
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:185px;               /* 左から50pxの位置に表示 */
+		  top:41px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday_backday_change_bottun
+		{
+		  width :300px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_backday_change_bottun
+		{		
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:170px;               /* 左から50pxの位置に表示 */
+		  top:66px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday_colorsort_change_bottun
+		{
+		  width :300px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_colorsort_change_bottun
+		{		
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:18px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.Sortlabel_total
+		{
+		  width :50px;             /* 横幅を50pxにする */
+		  height:100px;             /* 縦幅を50pxにする */
+		}
+		div#Sortlabel_total
+		{		
+				  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:0px;               /* 左から50pxの位置に表示 */
+		  top:40px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.Sortlabel_var_info
+		{
+		  width :30px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#Sortlabel_var_info
+		{		
+				  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:80px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.total_pathline_info
+		{
+		  width :840px;             /* 横幅を50pxにする */
+		  height:380px;             /* 縦幅を50pxにする */
+		}
+		div#total_pathline_info
+		{		
+				  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:1150px;               /* 左から50pxの位置に表示 */
+		  top:630px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}		
+		div.waku_pathline_info
+		{
+		  width :820px;             /* 横幅を50pxにする */
+		  height:310px;             /* 縦幅を50pxにする */
+		}
+		div#waku_pathline_info
+		{		
+				  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:60px;                /* 上から50pxの位置に表示 */
+		  z-index:4;               /* 奥行番号を２にする */
+		}	
+
+		div.waku_draw3d
+		{
+		  width :1000px;             /* 横幅を50pxにする */
+		  height:500px;             /* 縦幅を50pxにする */
+		}
+		div#waku_draw3d
+		{		
+				  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:790px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.draw3d
+		{
+		  width :540px;             /* 横幅を50pxにする */
+		  height:360px;             /* 縦幅を50pxにする */
+		}
+		div#draw3d
+		{		
+				  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:50px;                /* 上から50pxの位置に表示 */
+		  z-index:1;               /* 奥行番号を２にする */
+		}
+		div.draw3d_fullpath
+		{
+		  width :540px;             /* 横幅を50pxにする */
+		  height:360px;             /* 縦幅を50pxにする */
+		}
+		div#draw3d_fullpath
+		{		
+				  border:1px solid black;  /* 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:570px;               /* 左から50pxの位置に表示 */
+		  top:50px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+
+		div.pathline_info
+		{
+		  width :600px;             /* 横幅を50pxにする */
+		  height:200px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info
+		{		
+				   /* border:1px solid black; 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:10px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+
+		div.pathline_title
+		{
+		  width :400px;             /* 横幅を50pxにする */
+		  height:40px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_title
+		{		
+				/*  border:1px solid black;   1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:5px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.pathline_info_backdaylabel
+		{
+		  width :400px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info_backdaylabel
+		{		
+				/*  border:1px solid black;   1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:18px;               /* 左から50pxの位置に表示 */
+		  top:17px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+
+		div.pathline_info_variablelabel
+		{
+		  width :40px;             /* 横幅を50pxにする */
+		  height:70px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info_variablelabel
+		{		
+				/*  border:1px solid black;   1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:17px;               /* 左から50pxの位置に表示 */
+		  top:3px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+
+		div.pathline_info_depthtransition
+		{
+		  width :600px;             /* 横幅を50pxにする */
+		  height:100px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info_depthtransition
+		{		
+				  /* border:1px solid black;  1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:80px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+
+		div.pathline_info_depthtransition_plusdistancetransition
+		{
+		  width :600px;             /* 横幅を50pxにする */
+		  height:100px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info_depthtransition_plusdistancetransition
+		{		
+		  /* border:1px solid black; 	 border:1px solid black;	 1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:180px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+
+		div.pathline_info_fishingpoint
+		{
+		  width :300px;             /* 横幅を50pxにする */
+		  height:50px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info_fishingpoint
+		{		
+				 /*   border:1px solid black;  1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:240px;               /* 左から50pxの位置に表示 */
+		  top:10px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.pathline_info_label_backday
+		{
+		  width :60px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info_label_backday
+		{		
+				  /*border:1px solid black;   1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:40px;               /* 左から50pxの位置に表示 */
+		  top:-17px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.pathline_info_label_variable
+		{
+		  width :40px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info_label_variable
+		{		
+				  /*border:1px solid black;   1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:-7px;               /* 左から50pxの位置に表示 */
+		  top:15px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.pathline_info_label_depth
+		{
+		  width :40px;             /* 横幅を50pxにする */
+		  height:20px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info_label_depth
+		{		
+				  /*border:1px solid black;   1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:6px;               /* 左から50pxの位置に表示 */
+		  top:17px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.pathline_info_label_depthtransition
+		{
+		  width :70px;             /* 横幅を50pxにする */
+		  height:10px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info_label_depthtransition
+		{		
+				  /*border:1px solid black;   1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:0px;               /* 左から50pxの位置に表示 */
+		  top:8px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+
+		div.pathline_info_label_variabletransition
+		{
+		  width :90px;             /* 横幅を50pxにする */
+		  height:10px;             /* 縦幅を50pxにする */
+		}
+		div#pathline_info_label_variabletransition
+		{		
+				  /*border:1px solid black;   1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:0px;               /* 左から50pxの位置に表示 */
+		  top:-10px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+
+		div#draw3d_title
+		{		
+				  /*border:1px solid black;   1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:10px;               /* 左から50pxの位置に表示 */
+		  top:10px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.draw3d_fullpath_bottun
+		{
+		  width :90px;             /* 横幅を50pxにする */
+		  height:10px;             /* 縦幅を50pxにする */
+		}
+		div#draw3d_fullpath_bottun
+		{		
+				  /*  border:1px solid black;  1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:260px;               /* 左から50pxの位置に表示 */
+		  top:380px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.draw3d_bottun_draw
+		{
+		  width :90px;             /* 横幅を50pxにする */
+		  height:10px;             /* 縦幅を50pxにする */
+		}
+		div#draw3d_bottun_draw
+		{		
+				  /*  border:1px solid black;  1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:60px;               /* 左から50pxの位置に表示 */
+		  top:10px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.draw3d_bottun_onoff
+		{
+		  width :20px;             /* 横幅を50pxにする */
+		  height:10px;             /* 縦幅を50pxにする */
+		}
+		div#draw3d_bottun_onoff
+		{		
+				  /*  border:1px solid black;  1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:20px;               /* 左から50pxの位置に表示 */
+		  top:0px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div.draw3d_fullpath_title
+		{
+		  width :100px;             /* 横幅を50pxにする */
+		  height:10px;             /* 縦幅を50pxにする */
+		}
+		div#draw3d_fullpath_title
+		{		
+				  /*  border:1px solid black;  1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:380px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+		div#label_fishingday_draw3d
+		{		
+				  /*  border:1px solid black;  1pxの緑の枠を付ける */
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:350px;                /* 上から50pxの位置に表示 */
+		  z-index:8;               /* 奥行番号を２にする */
+		}
+
+		div.label_fishingday_depth_change_draw3d
+		{
+		  width :80px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_depth_change_draw3d
+		{
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:46px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div.label_fishingday_backday_change_draw3d
+		{
+		  width :80px;             /* 横幅を50pxにする */
+		  height:30px;             /* 縦幅を50pxにする */
+		}
+		div#label_fishingday_backday_change_draw3d
+		{		
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:71px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div#label_fishingday_change_draw3d
+		{
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:21px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+		div#label_fishingday_change_draw3d_fulldepth
+		{
+		
+		  position:absolute;       /* 絶対位置指定を宣言 */
+		  left:100px;               /* 左から50pxの位置に表示 */
+		  top:21px;                /* 上から50pxの位置に表示 */
+		  z-index:6;               /* 奥行番号を２にする */
+		}
+
+
+
+
+		</style>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script src="d3.min.js"></script>	
+				<script src="d3.js"></script>	
+		<script src="js/csv3.js"></script>	
+		<script src="js/initial.js"></script>	
+		<script src="js/initial_2d.js"></script>	
+
+		<script src="jquery-2.1.1.min.js"></script>
+		<script src="jqdap.js"></script>
+
+		<script src="js/culc_dence.js"></script>	
+		<script src="js/zoom.js"></script>	
+		<script src="js/csvwright.js"></script>			
+	</head>
+
+	<body>
+<!-- 
+<p id="name"> Fishing </p>
+<p id="date">  </p>
+-->
+
+
+
+	<!--	<form>
+		<input type="button" value="before date" onclick="b_f_day_2d(1)">
+		<input type="button" value="next date" onclick="n_f_day_2d(1)">
+		<input type="button" value="back day" onclick="b_day_2d(1)">
+		<input type="button" value="ahead day" onclick="a_day_2d(1)">
+		<input type="button" value="depth +" onclick="depth_p_2d(1)">
+		<input type="button" value="depth -" onclick="depth_m_2d(1)">
+			<input type="button" value="fullpath" onclick="remove_3dfullpath()">
+		</form> -->
+<div class="waku">
+
+		<div class="waku_draw3d" id="waku_draw3d">
+			<div class="pathline_title" id="draw3d_title">
+			<b style ="font-size: 18pt" > 3D View </b>
+		    </div>		
+			<div class="draw3d" id="draw3d">
+				<div class="draw3d_fullpath_bottun" id="draw3d_fullpath_bottun">
+							<div class="draw3d_bottun_onoff" id="draw3d_bottun_onoff">
+							    <form>
+									<input type="button" value="On" onclick="draw3dcode_change(1)">
+									<input type="button" value="Off" onclick="draw3dcode_change(0)">							
+								</form>
+							 </div> 
+							<div class="draw3d_bottun_draw" id="draw3d_bottun_draw">
+							    <form>
+							<input type="button" value="Draw" onclick="draw_3d_once(1)">						
+								</form>
+							 </div> 
+			    </div> 
+			    <div class="label_fishingday" id="label_fishingday_draw3d">
+						<p style ="font-size: 14pt"> Fishing Day:  </p>	 
+     		         <div class="label_fishingday_depth" id="label_fishingday_depth">
+  						<p style ="font-size: 14pt"> Depth:  </p>	   		         
+     		         </div>  
+     		         <div class="label_fishingday_backday" id="label_fishingday_backday">
+     		         	<p style ="font-size: 14pt"> Back Days:  </p>	
+     		         </div>  
+	     			 <div class="label_fishingday_change" id="label_fishingday_change_draw3d">
+						<p style ="font-size: 14pt"id="label_fishingday_change_draw3d">  </p>	 
+					 </div>  	
+     		     	 <div class="label_fishingday_depth_change_draw3d" id="label_fishingday_depth_change_draw3d">
+  						<p style ="font-size: 14pt"id="label_fishingday_depth_change_draw3d">  </p>	   		         
+     		         </div>           
+     		         <div class="label_fishingday_backday_change_draw3d" id="label_fishingday_backday_change_draw3d">
+     		         	<p style ="font-size: 14pt"id="label_fishingday_backday_change_draw3d">  </p>	
+     		         </div>  
+     		    </div>
+		   </div>  							
+			<div class="draw3d_fullpath" id="draw3d_fullpath">
+				<div class="draw3d_fullpath_title" id="draw3d_fullpath_title">
+						<b style ="font-size: 15pt" > Full Depth </b>
+			    </div>	
+			    			    <div class="label_fishingday" id="label_fishingday_draw3d">
+						<p style ="font-size: 14pt"> Fishing Day:  </p>	 
+     		         <div class="label_fishingday_depth" id="label_fishingday_depth">
+  						<p style ="font-size: 14pt">  </p>	   		         
+     		         </div>  
+     		         <div class="label_fishingday_backday" id="label_fishingday_backday">
+     		         	<p style ="font-size: 14pt">   </p>	
+     		         </div>  
+	     			 <div class="label_fishingday_change" id="label_fishingday_change_draw3d_fulldepth">
+						<p style ="font-size: 14pt"id="label_fishingday_change_draw3d_fulldepth">  </p>	 
+					 </div>  	
+     		     	 <div class="label_fishingday_depth_change_draw3d" id="label_fishingday_depth_change_draw3d_fulldepth">
+  						<p style ="font-size: 14pt"id="label_fishingday_depth_change_draw3d_fulldepth">  </p>	   		         
+     		         </div>           
+     		         <div class="label_fishingday_backday_change_draw3d" id="label_fishingday_backday_change_draw3d_fulldepth">
+     		         	<p style ="font-size: 14pt"id="label_fishingday_backday_change_draw3d_fulldepth">  </p>	
+     		         </div>  
+     		    </div>
+				<div class="draw3d_fullpath_bottun" id="draw3d_fullpath_bottun">
+						<form>
+							<input type="button" value="Draw_full" onclick="draw3d_fulldepth()">
+						
+						</form>
+			    </div>  		
+			</div>  
+
+		</div>  
+
+						
+		
+	<div class="total_pathline_info" id="total_pathline_info">
+		<div class="total_labal_colorcode_pathinfo_S" id="total_labal_colorcode_pathinfo_S">
+			    		<div class="colorcode_pathinfo_S" id="colorcode_pathinfo_S">
+		    		  <img src="cpuecolor.jpg" width="6" height="40" alt="cpue_color" >
+		    		</div> 	
+					<div class="labal_colorcode_cpue" id="labal_colorcode_pathinfo_S">
+						<b style ="font-size: 6pt" id="cpuelavel1"> S </b>
+					</div>
+		    		<div class="labal_colorcode_cpue" id="labal_colorcode_pathinfo_S2">
+		    			<p style ="font-size: 1pt" id="cpuelavel1"> 34.5 </p>
+		    		</div>
+		    		<div class="labal_colorcode_cpue" id="labal_colorcode_pathinfo_S3">
+		    			<p style ="font-size: 2pt" id="cpuelavel1"> 32.5 </p>
+		    		</div>	
+
+					<div class="total_labal_colorcode_pathinfo_T" id="total_labal_colorcode_pathinfo_T">
+						    		<div class="colorcode_pathinfo_S" id="colorcode_pathinfo_S">
+					    		  <img src="cpuecolor.jpg" width="6" height="40" alt="cpue_color" >
+					    		</div> 	
+								<div class="labal_colorcode_cpue" id="labal_colorcode_pathinfo_S">
+									<b style ="font-size: 6pt" id="cpuelavel1"> T </b>
+								</div>
+					    		<div class="labal_colorcode_cpue" id="labal_colorcode_pathinfo_T2">
+					    			<p style ="font-size: 3pt" id="cpuelavel1"> 25 </p>
+					    		</div>
+					    		<div class="labal_colorcode_cpue" id="labal_colorcode_pathinfo_T3">
+					    			<p style ="font-size: 3pt" id="cpuelavel1"> 0 </p>
+					    		</div>	
+						
+					</div>  
+					<div class="total_labal_colorcode_pathinfo_suikai" id="total_labal_colorcode_pathinfo_suikai">
+						    		<div class="colorcode_pathinfo_S" id="colorcode_pathinfo_S">
+					    		  <img src="cpuecolor.jpg" width="6" height="40" alt="cpue_color" >
+					    		</div> 	
+								<div class="labal_colorcode_cpue" id="labal_colorcode_pathinfo_S">
+									<b style ="font-size: 6pt" id="cpuelavel1"> WS </b>
+								</div>
+					    		<div class="labal_colorcode_cpue" id="labal_colorcode_pathinfo_T2">
+					    			<p style ="font-size: 3pt" id="cpuelavel1"> KW </p>
+					    		</div>
+					    		<div class="labal_colorcode_cpue" id="labal_colorcode_pathinfo_T3">
+					    			<p style ="font-size: 3pt" id="cpuelavel1"> OW </p>
+					    		</div>	
+						
+					</div>  
+
+		</div>  
+
+
+
+		<div class="waku_pathline_info" id="waku_pathline_info">
+			<div class="pathline_info" id="pathline_info">
+				<div class="pathline_info_label_variabletransition" id="pathline_info_label_variabletransition">
+							<b style ="font-size: 3pt" > Variable Transition </b>	
+				</div>	
+				<div class="pathline_info_backdaylabel" id="pathline_info_backdaylabel">
+							<div class="pathline_info_label_backday" id="pathline_info_label_backday">
+								<p style ="font-size: 2pt" > Day Back[day] </p>	
+							</div>	
+				</div>		
+				<div class="pathline_info_variablelabel" id="pathline_info_variablelabel">
+							<div class="pathline_info_label_variable" id="pathline_info_label_variable">
+								<p style ="font-size: 1pt" > Var </p>	
+							</div>				
+				</div>							
+			</div>
+					<div class="pathline_info_depthtransition" id="pathline_info_depthtransition">
+						<div class="pathline_info_label_depth" id="pathline_info_label_depth">
+							<p style ="font-size: 1pt" > Depth[m] </p>	
+						</div>		
+						<div class="pathline_info_label_depthtransition" id="pathline_info_label_depthtransition">
+							<b style ="font-size: 3pt" > Depth Transition </b>	
+						</div>							
+					</div>	
+					<div class="pathline_info_depthtransition_plusdistancetransition" id="pathline_info_depthtransition_plusdistancetransition">
+						<div class="pathline_info_label_depth" id="pathline_info_label_depth">
+							<p style ="font-size: 1pt" > Depth[m] </p>	
+						</div>		
+						<div class="pathline_info_label_depthtransition" id="pathline_info_label_depthtransition">
+							<b style ="font-size: 3pt" > Depth Transition </b>	
+						</div>							
+					</div>	
+
+		</div>	
+
+		<div class="pathline_title" id="pathline_title">
+			<b style ="font-size: 18pt" > Pathline information </b>
+		</div>		
+		<div class="pathline_info_fishingpoint" id="pathline_info_fishingpoint">
+			<b style ="font-size: 12pt" id="number_fishingpint"> number_fishingpint </b>			
+			<p style ="font-size: 10pt" id="date_only"> date </p>
+			<!--<p style ="font-size: 10pt" id="dapth_only"> depth </p>	-->	
+					
+		</div>			
+
+	
+	</div> 
+
+
+	
+
+
+
+     	     		    <div class="Sortlabel_total" id="Sortlabel_total">
+     		    	        <div class="Sortlabel_var_info" id="Sortlabel_var_info">
+     		    	        	<p style ="font-size: 16pt" id="Sortlabel_var_info_number"> 32 </p>
+     		    	        </div>	     		    	
+     	     		    </div>  
+    	<div class="total_heat" id="total_heat">
+	    	<div class="heat" id="subheat">
+		    	<div class="heatcolorcode" id="heatcolorcode"></div>
+		      	<div class="heatcode_text" id="heatcode_text">
+		      		<text x="0" y="20" id="min"> 0 </text>
+		      	</div>
+		      	<div class="heatcode_text_max" id="heatcode_text_max">
+		      		<text x="0" y="20" id="max"> 3 </text>
+		      	</div>
+		   		<div class="heatlabel1" id="heatlabel1"></div>     	
+		      	<div class="heatlabel2" id="heatlabel2"></div>   
+		       	<div class="heatlabel_cor" id="heatlabel_cor">
+		       		<div class="heatlabel_range" id="heatlabel_range">
+		       			<p style ="font-size: 13pt" id="heatlabel_range"> From 1th Janualy to 1th March </p>
+		       		</div>   
+		       	</div>   	
+		    	<div class="l_depth" id="l_depth"></div>  
+		    	<div class="l_backday" id="l_backday"></div>  		
+	    	</div>
+    	</div>
+
+
+    
+
+
+
+
+
+
+    	<div class="totalocean" id="totalocean">
+
+    		    	<div class="main" id="mainocean"></div>
+      	            <div class="main" id="mainocean2"></div>
+			    	<div class="pathline" id="pathline">
+			    		<div class="oceanlavel" id="oceanlavel">
+							<p style ="font-size: 14pt" id="date">  </p>
+			    		</div>  
+			    	</div>  
+
+    	</div>  
+
+
+
+
+     	<div class="total_zoomocean" id="total_zoomocean">
+
+     		<div class="zoomocean" id="zoomocean"></div>  
+    		<div class="zoomocean" id="zoomocean_pathline">
+    			<div class="oceanlavel" id="oceanlavel_zoom">
+					<b style ="font-size: 18pt" > Ocean Field </b>
+			    </div> 
+	     		<div class="total_labal_colorcode_cpue" id="total_labal_colorcode_cpue"></div>  		     
+	    		<div class="colorcode_cpue" id="colorcode_cpue">
+	    		  <img src="cpuecolor.jpg" width="10" height="40" alt="cpue_color" >
+	    		</div> 		
+				<div class="labal_colorcode_cpue" id="labal_colorcode_cpue1">
+					<p style ="font-size: 8pt" id="cpuelavel1"> CPUE </p>
+				</div>
+	    		<div class="labal_colorcode_cpue" id="labal_colorcode_cpue2">
+	    			<p style ="font-size: 3pt" id="cpuelavel1"> 35 </p>
+	    		</div>
+	    		<div class="labal_colorcode_cpue" id="labal_colorcode_cpue3">
+	    			<p style ="font-size: 3pt" id="cpuelavel1"> 0 </p>
+	    		</div>	
+	    		<div class="label_lat_lon" id="label_lat">
+	      			<p style ="font-size: 3pt" id="label_lat"> lat </p>  			
+	    		</div>  
+	    		<div class="label_lat_lon" id="label_lon">
+	      			<p style ="font-size: 3pt" id="label_lon"> lon </p>  			
+	    		</div>  	  
+	    		  		
+	     		<div class="label_fishingday" id="label_fishingday">
+						<p style ="font-size: 14pt"> Fishing Day:  </p>	 
+     		         <div class="label_fishingday_depth" id="label_fishingday_depth">
+  						<p style ="font-size: 14pt"> Depth:  </p>	   		         
+     		         </div>  
+     		         <div class="label_fishingday_backday" id="label_fishingday_backday">
+     		         	<p style ="font-size: 14pt"> Back Days:  </p>	
+     		         </div>  
+	     			 <div class="label_fishingday_change" id="label_fishingday_change">
+						<p style ="font-size: 14pt"id="label_fishingday_change">  </p>	 
+					 </div>  	
+     		     	 <div class="label_fishingday_depth_change" id="label_fishingday_depth_change">
+  						<p style ="font-size: 14pt"id="label_fishingday_depth_change">  </p>	   		         
+     		         </div>           
+     		         <div class="label_fishingday_backday_change" id="label_fishingday_backday_change">
+     		         	<p style ="font-size: 14pt"id="label_fishingday_backday_change">  </p>	
+     		         </div>  
+		    		<div class="label_fishingday_change_bottun" id="label_fishingday_change_bottun"> 	
+		    			<form>	
+		    				<input type="button" value="⇐⇐" onclick="b_f_day_2d_ocean(10)">		    				
+		    				<input type="button" value="⇐" onclick="b_f_day_2d_ocean(5)">		    			
+		    				<input type="button" value="←" onclick="b_f_day_2d_ocean(1)">
+							<input type="button" value="→" onclick="n_f_day_2d_ocean(1)">
+							<input type="button" value="⇒" onclick="n_f_day_2d_ocean(5)">
+							<input type="button" value="⇒⇒" onclick="n_f_day_2d_ocean(10)">
+			   			</form>
+		    		</div>	
+		    		<div class="label_fishingday_depth_change_bottun" id="label_fishingday_depth_change_bottun"> 	
+		    			<form>	
+		    			    <input type="button" value="⇊⇊" onclick="depth_p_2d_ocean(10)">			    			
+		    			    <input type="button" value="⇊" onclick="depth_p_2d_ocean(5)">	
+							<input type="button" value="↓" onclick="depth_p_2d_ocean(1)">
+							<input type="button" value="↑" onclick="depth_m_2d_ocean(1)">
+		                    <input type="button" value="⇈" onclick="depth_m_2d_ocean(5)">
+		                    <input type="button" value="⇈⇈" onclick="depth_m_2d_ocean(10)">
+			   			</form>
+		    		</div>	
+		    		<div class="label_fishingday_backday_change_bottun" id="label_fishingday_backday_change_bottun"> 	
+		    			<form>		
+							<input type="button" value="⇐⇐" onclick="b_day_2d_ocean(10)">		    			
+							<input type="button" value="⇐" onclick="b_day_2d_ocean(5)">		    			
+							<input type="button" value="←" onclick="b_day_2d_ocean(1)">
+							<input type="button" value="→" onclick="a_day_2d_ocean(1)">
+							<input type="button" value="⇒" onclick="a_day_2d_ocean(5)">
+							<input type="button" value="⇒⇒" onclick="a_day_2d_ocean(10)">							
+			   			</form>
+		    		</div>		
+		    		<div class="label_fishingday_backday_change_bottun" id="label_fishingday_backday_change_bottun"> 	
+		    			<form>		
+							<input type="button" value="⇐⇐" onclick="b_day_2d_ocean(10)">		    			
+							<input type="button" value="⇐" onclick="b_day_2d_ocean(5)">		    			
+							<input type="button" value="←" onclick="b_day_2d_ocean(1)">
+							<input type="button" value="→" onclick="a_day_2d_ocean(1)">
+							<input type="button" value="⇒" onclick="a_day_2d_ocean(5)">
+							<input type="button" value="⇒⇒" onclick="a_day_2d_ocean(10)">							
+			   			</form>
+		    		</div>	
+		    		<div class="label_fishingday_colorsort" id="label_fishingday_colorsort">
+						<p style ="font-size: 14pt"> Color Sort:  </p>	
+				    		<div class="label_fishingday_colorsort_change_bottun" id="label_fishingday_colorsort_change_bottun"> 	
+				    			<form>		
+									<input type="button" value="CPUE" onclick="pathline_color(0)">
+									<input type="button" value="S" onclick="pathline_color(1)">	
+									<input type="button" value="T" onclick="pathline_color(2)">
+									<input type="button" value="水塊" onclick="pathline_color(4)">
+									<input type="button" value="UpDown" onclick="pathline_color(3)">					
+					   			</form>
+				    		</div>	
+					</div>
+		    		
+	     		</div>  
+	    			
+    		</div>
+	  
+     	</div>  
+
+
+</div>
+		
+		<form>
+
+		
+
+
+
+		</form>
+		<!--
+
+		<input type="button" value="before fishing day" onclick="b_f_day_2d_ocean(1)">
+		<input type="button" value="next fishing day" onclick="n_f_day_2d_ocean(1)">
+		<input type="button" value="before fishing day 10 " onclick="b_f_day_2d_ocean(10)">
+		<input type="button" value="next fishing day 10 " onclick="n_f_day_2d_ocean(10)">	
+		<input type="button" value="back day" onclick="b_day_2d_ocean(1)">
+		<input type="button" value="front day" onclick="a_day_2d_ocean(1)">
+		<input type="button" value="back day 10" onclick="b_day_2d_ocean(10)">
+		<input type="button" value="front day 10" onclick="a_day_2d_ocean(10)">
+
+
+
+		<input type="button" value="depth +" onclick="depth_p_2d_ocean(1)">
+		<input type="button" value="depth -" onclick="depth_m_2d_ocean(1)">
+		<input type="button" value="depth + 5" onclick="depth_p_2d_ocean(5)">
+		<input type="button" value="depth - 5" onclick="depth_m_2d_ocean(5)">		
+		<input type="button" value="モード1" onclick="mode_2d(0)">
+		<input type="button" value="モード2:水塊" onclick="mode_2d(1)">
+		<input type="button" value="親潮" onclick="OW_2d()">
+		<input type="button" value="黒潮" onclick="KW_2d()">
+		<input type="button" value="津軽海流" onclick="TW_2d()">
+		<input type="button" value="CO" onclick="CO_2d()">
+		<input type="button" value="SOW" onclick="SOW_2d()">
+		<input type="button" value="CL" onclick="CL_2d()">
+		<input type="button" value="SCO" onclick="SCO_2d()">
+
+		<input type="button" value="渦" onclick="UW_2d()">
+		<input type="button" value="水温で親潮200ｍ" onclick="OW_T_2d()">
+
+
+
+		<form>
+		<input type="button" value="1" onclick="day(0,0)">
+		<input type="button" value="2" onclick="day(0,1)">
+		<input type="button" value="3" onclick="day(0,2)">
+		<input type="button" value="4" onclick="day(1,0)">
+		<input type="button" value="d5" onclick="day(2,0)">
+		<input type="button" value="5 -" onclick="day(3,0)">
+		</form>
+
+		<form>
+		<input type="button" value="before date" onclick="b_f_day_2d_ocean2(1)">
+		<input type="button" value="next date" onclick="n_f_day_2d_ocean2(1)">
+		</form>
+
+		<form>
+		<input type="button" value="depth +" onclick="depth_p_2d_ocean2(1)">
+		<input type="button" value="depth -" onclick="depth_m_2d_ocean2(1)">
+		</form>
+
+	-->
+  	<div id="myGraph"></div>
+<!--	<script src="js/1.js"></script>	-->
+	<script src="js/p_jsdap.js"></script>	
+	<div id="myGraph2"></div>
+		<div id="myGraph22"></div>
+	<script src="js/2.js"></script>	
+
+
+	
+ 	 <!--
+
+ 	 		<form>
+		<input type="button" value="day0" onclick="day_3d(0,0)">
+		<input type="button" value="day1" onclick="day_3d(0,1)">
+		<input type="button" value="day2" onclick="day_3d(0,2)">
+		<input type="button" value="day3" onclick="day_3d(0,3)">
+		</form>
+
+		<form>
+		<input type="button" value="depth0" onclick="day_3d(1,3)">
+		<input type="button" value="depth1" onclick="day_3d(1,3)">
+		<input type="button" value="depth2" onclick="day_3d(1,3)">
+		<input type="button" value="depth3" onclick="day_3d(1,3)">
+		</form>
+
+<form name="selbox">
+<p>深さインデックスは？</p>
+<select name="league" onchange="teamSet()">
+
+
+<option value="">*深さ選択</option>
+<option value="">1</option>
+<option value="">2</option>
+<option value="">3</option>
+<option value="">4</option>
+</select>
+-->
+
+<!--
+
+		<form>
+		<input type="button" value="before date" onclick="b_f_day(1)">
+		<input type="button" value="next date" onclick="n_f_day(1)">
+		</form>
+
+		<form>
+		<input type="button" value="back day" onclick="b_day(1)">
+		<input type="button" value="ahead day" onclick="a_day(1)">
+		</form>
+
+		<form>
+		<input type="button" value="depth +" onclick="depth_p(1)">
+		<input type="button" value="depth -" onclick="depth_m(1)">
+		</form>
+-->
+<!---->
+		<div id="stage"></div>
+	<script src="three.min.js"></script>
+		<script src="OrbitControls.js"></script>
+
+	<script src="js/3d_point.js"></script>	
+
+	  	<div id="3d_ocean"></div>
+	<script src="js/3d_point3.js"></script>	
+
+		  	<div id="pathline_infomation"></div>
+
+		  	<div id="3d_ocean_fulldepthpathline"></div>	
+		  	<script src="js/3d_fulldepthpathline.js"></script>	 
+	
+
+
+
+
+
+<!--
+	<script src="js/3d_point3_fulldepthpathline.js"></script>	  	
+
+	  	<div id="3d_ocean"></div>
+	<script src="js/3d_ocean.js"></script>	
+	<script src="js/3d_ocean.js"></script>		
+	<script src="js/3d_ocean.js"></script>	
+	<div id="myGraph2_3d"></div>
+	<script src="js/2_3d.js"></script>	
+
+<p> Target day = </p>
+-->
+
+	<script src="js/bottun.js"></script>	
+	<script src="js/bottun_2d.js"></script>	
+
+
+
+<!--
+<div id="example">
+    <svg width="300" height="300">
+        <g transform="translate(50,90)">
+            <circle r="30" fill="#1f77b4"></circle>
+            <text text-anchor="middle" dy=".35em" fill="red">1</text>
+        </g>
+    </svg>
+</div>
+
+<div id="example">
+    <svg width="300" height="300">
+        <g transform="translate(50,90)">
+            <rect width="100" height="100" fill="#1f77b4"></rect>
+            <text text-anchor="middle" dy=".35em" fill="red">1</text>
+        </g>
+    </svg>
+</div>
+
+<div id="example"></div>
+	<script src="js/study.js"></script>	
+
+	
+  	<div id="myGraph_ocean"></div>
+
+  	<div id="study"></div>
+	<script src="js/ew.js"></script>	
+	-->
+
+
+ <script>
+ </script>
+
+	</body>
+</html>
+
+
+
+
