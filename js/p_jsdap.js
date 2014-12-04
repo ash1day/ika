@@ -698,7 +698,7 @@ function draw_pathline(devi_day_target){
                    };
 
                         for (i_p = 1; i_p < points.length; i_p++){
-                            if ((points[i_p].year == year_target ) && ( points[i_p].month == month_target) && (points[i_p].day == day_target)) {//target date に合ってたら描画
+                            // if ((points[i_p].year == year_target ) && ( points[i_p].month == month_target) && (points[i_p].day == day_target)) {//target date に合ってたら描画
                                   xyin.push([]);
                                   for (i_d2 = 0; i_d2 < devi_day_target; i_d2++){
                                   //  xyin[c_point].push(points[i_p].xyz[depth_target][i_d2]);
@@ -768,7 +768,7 @@ function draw_pathline(devi_day_target){
 
                                 c_point = c_point + 1;//漁獲店用
                                 }
-                            }
+                            // }
 
 
                             n_c_point_gloval = c_point;
